@@ -1,9 +1,10 @@
-package med.vol.api.Address;
+package med.vol.api.entities;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.vol.api.dtos.AddressDTO;
 
 @Embeddable
 @Getter
@@ -19,6 +20,19 @@ public class Address {
     this.street = address.street();
     this.neighborhood = address.neighborhood();
     this.city = address.city();
-    this.number = address.number();
+  }
+
+  public void updateAddress(AddressDTO address) {
+    if (address.street() != null) {
+      this.city = address.street();
+    }
+
+    if (address.neighborhood() != null) {
+      this.city = address.neighborhood();
+    }
+
+    if (address.city() != null) {
+      this.city = address.city();
+    }
   }
 }

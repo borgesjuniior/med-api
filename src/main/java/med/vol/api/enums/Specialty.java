@@ -1,4 +1,4 @@
-package med.vol.api.Doctors;
+package med.vol.api.enums;
 
 public enum Specialty {
   ORTHOPEDICS,

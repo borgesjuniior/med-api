@@ -1,4 +1,4 @@
-package med.vol.api.Doctors;
+package med.vol.api.entities;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -12,7 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.vol.api.Address.Address;
+import med.vol.api.dtos.MedicalRegistrationData;
+import med.vol.api.dtos.MedicalUpdateDTO;
+import med.vol.api.enums.Specialty;
 
 @Entity(name = "doctors")
 @Table(name = "doctors")
@@ -43,5 +45,19 @@ public class Doctor {
     this.crm = data.crm();
     this.address = new Address(data.address());
     this.specialty = data.specialty();
+  }
+
+  public void updateInfo(MedicalUpdateDTO data) {
+    if (data.name() != null) {
+      this.name = data.name();
+    }
+
+    if (data.phone() != null) {
+      this.phone = data.phone();
+    }
+
+    if (data.address() != null) {
+      this.address.updateAddress(data.address());
+    }
   }
 }
