@@ -1,8 +1,8 @@
 package med.vol.api.Controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +31,7 @@ public class DoctorController {
   }
 
   @GetMapping
-  public List<MedicalListDTO> list() {
-    return doctorReposity.findAll().stream().map(MedicalListDTO::new).toList();
+  public Page<MedicalListDTO> list(Pageable pageable) {
+    return doctorReposity.findAll(pageable).map(MedicalListDTO::new);
   }
 }
