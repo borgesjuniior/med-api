@@ -1,4 +1,4 @@
-package med.vol.api.Controllers.Address;
+package med.vol.api.Address;
 
 public record Address(String street, String neighborhood, String city, String number) {
 
