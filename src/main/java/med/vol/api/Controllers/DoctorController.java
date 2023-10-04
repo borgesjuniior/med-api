@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import med.vol.api.Doctors.Doctor;
 import med.vol.api.Doctors.DoctorRepository;
 import med.vol.api.Doctors.MedicalRegistrationData;
@@ -20,7 +21,7 @@ public class DoctorController {
 
   @PostMapping
   @Transactional
-  public void create(@RequestBody MedicalRegistrationData data) { // Get request body
+  public void create(@RequestBody @Valid MedicalRegistrationData data) { // Get request body
     doctorReposity.save(new Doctor(data));
   }
 }
