@@ -10,6 +10,7 @@ import med.vol.api.Address.AddressDTO;
 public record MedicalRegistrationData(
     @NotBlank String name,
     @NotBlank @Email String email,
+    @NotBlank String phone,
     @NotBlank @Pattern(regexp = "\\d{4,6}") String crm,
     @NotNull Specialty specialty,
     @NotNull @Valid AddressDTO address) {

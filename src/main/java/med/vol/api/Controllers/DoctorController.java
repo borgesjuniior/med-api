@@ -21,7 +21,8 @@ public class DoctorController {
 
   @PostMapping
   @Transactional
-  public void create(@RequestBody @Valid MedicalRegistrationData data) { // Get request body
+  public void create(@RequestBody @Valid MedicalRegistrationData data) { // Pega os parametros do corpo da requisição e
+                                                                         // aciona o bean validation
     doctorReposity.save(new Doctor(data));
   }
 }
