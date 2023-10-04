@@ -1,4 +1,4 @@
-package med.vol.api;
+package med.vol.api.Controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
