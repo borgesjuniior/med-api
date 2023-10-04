@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import med.vol.api.Address.Address;
 
 @Entity(name = "doctors")
-@Table(name = "doctor")
+@Table(name = "doctors")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +30,7 @@ public class Doctor {
   private String crm;
 
   @Enumerated(EnumType.STRING)
-  private Specialty epecialty;
+  private Specialty specialty;
 
   @Embedded
   private Address address;
@@ -40,6 +40,6 @@ public class Doctor {
     this.email = data.email();
     this.crm = data.crm();
     this.address = new Address(data.address());
-    this.epecialty = data.specialty();
+    this.specialty = data.specialty();
   }
 }
