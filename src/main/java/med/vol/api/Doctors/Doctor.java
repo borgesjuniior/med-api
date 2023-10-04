@@ -20,7 +20,7 @@ import med.vol.api.Address.Address;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class DoctorEntity {
+public class Doctor {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +34,12 @@ public class DoctorEntity {
 
   @Embedded
   private Address address;
+
+  public Doctor(MedicalRegistrationData data) {
+    this.name = data.name();
+    this.email = data.email();
+    this.crm = data.crm();
+    this.address = new Address(data.address());
+    this.epecialty = data.specialty();
+  }
 }

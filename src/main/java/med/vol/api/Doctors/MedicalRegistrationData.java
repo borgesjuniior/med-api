@@ -1,8 +1,8 @@
 package med.vol.api.Doctors;
 
-import med.vol.api.Address.Address;
+import med.vol.api.Address.AddressDTO;
 
-public record MedicalRegistrationData(String name, String email, String crm, Specialty specialty, Address address) {
+public record MedicalRegistrationData(String name, String email, String crm, Specialty specialty, AddressDTO address) {
 
 }
 

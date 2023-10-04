@@ -14,4 +14,11 @@ public class Address {
   private String neighborhood;
   private String city;
   private String number;
+
+  public Address(AddressDTO address) {
+    this.street = address.street();
+    this.neighborhood = address.neighborhood();
+    this.city = address.city();
+    this.number = address.number();
+  }
 }
