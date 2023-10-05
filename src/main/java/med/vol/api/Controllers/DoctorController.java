@@ -47,6 +47,12 @@ public class DoctorController {
     return doctorReposity.findAll(pageable).map(DoctorDetailsListDTO::new);
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<DoctorDetails> details(@PathVariable Long id) {
+    var doctor = doctorReposity.getReferenceById(id);
+    return ResponseEntity.ok(new DoctorDetails(doctor));
+  }
+
   @PutMapping
   @Transactional
   public ResponseEntity<DoctorDetails> update(@RequestBody @Valid DoctorUpdateDTO doctor) {
@@ -58,7 +64,7 @@ public class DoctorController {
 
   @DeleteMapping("/{id}")
   @Transactional
-  public ResponseEntity<Void> delete(@PathVariable Long id) { // pega o id pela rota
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
     doctorReposity.deleteById(id);
 
     return ResponseEntity.noContent().build();
