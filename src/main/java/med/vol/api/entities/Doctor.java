@@ -12,8 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.vol.api.dtos.MedicalRegistrationData;
-import med.vol.api.dtos.MedicalUpdateDTO;
+import med.vol.api.dtos.DoctorRegistrationDTO;
+import med.vol.api.dtos.DoctorUpdateDTO;
 import med.vol.api.enums.Specialty;
 
 @Entity(name = "doctors")
@@ -38,7 +38,7 @@ public class Doctor {
   @Embedded
   private Address address;
 
-  public Doctor(MedicalRegistrationData data) {
+  public Doctor(DoctorRegistrationDTO data) {
     this.name = data.name();
     this.email = data.email();
     this.phone = data.phone();
@@ -47,17 +47,17 @@ public class Doctor {
     this.specialty = data.specialty();
   }
 
-  public void updateInfo(MedicalUpdateDTO data) {
-    if (data.name() != null) {
-      this.name = data.name();
+  public void updateInfo(DoctorUpdateDTO doctor) {
+    if (doctor.name() != null) {
+      this.name = doctor.name();
     }
 
-    if (data.phone() != null) {
-      this.phone = data.phone();
+    if (doctor.phone() != null) {
+      this.phone = doctor.phone();
     }
 
-    if (data.address() != null) {
-      this.address.updateAddress(data.address());
+    if (doctor.address() != null) {
+      this.address.updateAddress(doctor.address());
     }
   }
 }

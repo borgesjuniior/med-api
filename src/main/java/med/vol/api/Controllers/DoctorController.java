@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.validation.Valid;
-import med.vol.api.dtos.MedicalListDTO;
-import med.vol.api.dtos.MedicalRegistrationData;
-import med.vol.api.dtos.MedicalUpdateDTO;
+import med.vol.api.dtos.DoctorDetailsListDTO;
+import med.vol.api.dtos.DoctorDetails;
+import med.vol.api.dtos.DoctorRegistrationDTO;
+import med.vol.api.dtos.DoctorUpdateDTO;
 import med.vol.api.entities.Doctor;
 import med.vol.api.repositories.DoctorRepository;
 
@@ -25,34 +28,40 @@ import med.vol.api.repositories.DoctorRepository;
 @RequestMapping("doctors")
 public class DoctorController {
 
-  @Autowired // Injeção das dependências
+  @Autowired
   private DoctorRepository doctorReposity;
 
   @PostMapping
   @Transactional
-  // Pega os parametros do corpo da requisição e aciona o bean validation
-  public void create(@RequestBody @Valid MedicalRegistrationData data) {
-    doctorReposity.save(new Doctor(data));
+  public ResponseEntity<DoctorDetails> create(@RequestBody @Valid DoctorRegistrationDTO data,
+      UriComponentsBuilder ruiBuidler) {
+    var doctor = new Doctor(data);
+    doctorReposity.save(doctor);
+    var URI = ruiBuidler.path("/doctor/{id}").buildAndExpand(doctor.getId()).toUri();
+
+    return ResponseEntity.created(URI).body(new DoctorDetails(doctor));
   }
 
   @GetMapping
-  // Seta paginação com alguns parametros padrão, caso não foram passados pelo
-  // cliente
-  public Page<MedicalListDTO> list(@PageableDefault(size = 10, sort = { "name" }) Pageable pageable) {
-    return doctorReposity.findAll(pageable).map(MedicalListDTO::new);
+  public Page<DoctorDetailsListDTO> list(@PageableDefault(size = 10, sort = { "name" }) Pageable pageable) {
+    return doctorReposity.findAll(pageable).map(DoctorDetailsListDTO::new);
   }
 
   @PutMapping
   @Transactional
-  public void update(@RequestBody @Valid MedicalUpdateDTO data) {
-    var doctor = doctorReposity.getReferenceById(data.id());
-    doctor.updateInfo(data);
+  public ResponseEntity<DoctorDetails> update(@RequestBody @Valid DoctorUpdateDTO doctor) {
+    var targetDoctor = doctorReposity.getReferenceById(doctor.id());
+    targetDoctor.updateInfo(doctor);
+
+    return ResponseEntity.ok(new DoctorDetails(targetDoctor));
   }
 
   @DeleteMapping("/{id}")
   @Transactional
-  public void delete(@PathVariable Long id) { // pega o id pela rota
+  public ResponseEntity<Void> delete(@PathVariable Long id) { // pega o id pela rota
     doctorReposity.deleteById(id);
+
+    return ResponseEntity.noContent().build();
   }
 
 }
