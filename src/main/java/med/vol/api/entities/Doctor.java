@@ -16,7 +16,7 @@ import med.vol.api.dtos.DoctorRegistrationDTO;
 import med.vol.api.dtos.DoctorUpdateDTO;
 import med.vol.api.enums.Specialty;
 
-@Entity(name = "doctors")
+@Entity(name = "Doctor")
 @Table(name = "doctors")
 @Getter
 @NoArgsConstructor
