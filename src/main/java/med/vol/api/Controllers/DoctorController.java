@@ -1,4 +1,4 @@
-package med.vol.api.Controllers;
+package med.vol.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
