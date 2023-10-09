@@ -16,7 +16,18 @@ public class SecurityFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
+    var token = getToken(request);
     filterChain.doFilter(request, response);
+  }
+
+  private String getToken(HttpServletRequest request) {
+    var authorizationHeader = request.getHeader("Authorization");
+
+    if (authorizationHeader == null) {
+      throw new RuntimeException("JWT Token not found");
+    }
+
+    return authorizationHeader.replace("Bearer ", "");
   }
 
 }
