@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
 
 import med.vol.api.entities.User;
 
@@ -31,6 +34,20 @@ public class TokenService {
       return token;
     } catch (JWTCreationException exception) {
       throw new RuntimeException("Error generating token", exception);
+    }
+  }
+
+  public String getSubject(String token) {
+    try {
+      Algorithm algorithm = Algorithm.HMAC256(secret);
+
+      JWTVerifier verifier = JWT.require(algorithm)
+          .withIssuer("API")
+          .build();
+
+      return verifier.verify(token).getSubject();
+    } catch (JWTVerificationException exception) {
+      throw new RuntimeException("Invalid token");
     }
   }
 
