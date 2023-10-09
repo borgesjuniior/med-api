@@ -1,5 +1,7 @@
 package med.vol.api.exceptions;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,7 +19,7 @@ public class RestexceptionHandler {
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity badRequestHanlder(MethodArgumentNotValidException exception) {
+  public ResponseEntity<List<ExceptionHandlerDTO>> badRequestHanlder(MethodArgumentNotValidException exception) {
     var errors = exception.getFieldErrors();
 
     return ResponseEntity.badRequest().body(errors.stream().map(ExceptionHandlerDTO::new).toList());
