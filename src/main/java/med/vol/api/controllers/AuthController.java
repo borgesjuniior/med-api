@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import med.vol.api.dtos.LoginDTO;
+import med.vol.api.dtos.TokenDTO;
 import med.vol.api.entities.User;
 import med.vol.api.services.TokenService;
 
@@ -24,11 +25,11 @@ public class AuthController {
   private TokenService tokenService;
 
   @PostMapping
-  public ResponseEntity<String> authenticate(@RequestBody LoginDTO data) {
+  public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginDTO data) {
     var token = new UsernamePasswordAuthenticationToken(data.login(), data.password());
     var authentication = manager.authenticate(token);
     var generatedToken = tokenService.generateToken((User) authentication.getPrincipal());
-    return ResponseEntity.ok(generatedToken);
+    return ResponseEntity.ok(new TokenDTO(generatedToken));
   }
 
 }
