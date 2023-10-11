@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import med.vol.api.entities.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface IUserRepository extends JpaRepository<User, Long> {
 
   UserDetails findByLogin(String login);
 

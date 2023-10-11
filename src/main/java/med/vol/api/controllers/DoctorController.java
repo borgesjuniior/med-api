@@ -22,14 +22,14 @@ import med.vol.api.dtos.DoctorDetails;
 import med.vol.api.dtos.DoctorRegistrationDTO;
 import med.vol.api.dtos.DoctorUpdateDTO;
 import med.vol.api.entities.Doctor;
-import med.vol.api.repositories.DoctorRepository;
+import med.vol.api.repositories.IDoctorRepository;
 
 @RestController
-@RequestMapping("doctors")
+@RequestMapping("/doctors")
 public class DoctorController {
 
   @Autowired
-  private DoctorRepository doctorReposity;
+  private IDoctorRepository doctorReposity;
 
   @PostMapping
   @Transactional

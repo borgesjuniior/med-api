@@ -12,7 +12,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import med.vol.api.repositories.UserRepository;
+import med.vol.api.repositories.IUserRepository;
 import med.vol.api.services.TokenService;
 
 @Component // generic component from Spring
@@ -22,7 +22,7 @@ public class SecurityFilter extends OncePerRequestFilter {
   private TokenService tokenService;
 
   @Autowired
-  private UserRepository userRepository;
+  private IUserRepository userRepository;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
